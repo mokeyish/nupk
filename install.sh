@@ -1,7 +1,11 @@
 #!/bin/env bash
 
-# get dir from args
+set -e
+
+# curl -LsSf https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh -s -- <install dir>
 INSATLL_DIR="$1"
+
+INSATLL_DIR=${INSATLL_DIR:=$HOME/.nupk}
 
 echo "Cloning nupk to $INSATLL_DIR..."
 
@@ -13,4 +17,15 @@ git config core.sparseCheckout true
 
 git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh'
 
+
 git checkout
+
+chmod +x nupk.nu
+
+echo "Installing nupk to $HOME/.local/bin..."
+ln -sf $INSATLL_DIR/nupk.nu $HOME/.local/bin/nupk
+
+
+nupk info
+
+echo "Installation complete. You can now use 'nupk' command."
