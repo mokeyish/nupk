@@ -378,7 +378,7 @@ def install-file [
         log info $"Created directory: ($dir)"
     }
 
-    cp $src_path $dst_path
+    cp -r $src_path $dst_path
 
     if ($dir | path basename) == "bin" {
         chmod +x $dst_path
