@@ -283,6 +283,9 @@ def pkg [
         exit 1
     }
     let info = $s | open | eval
+    let info = if $info.commands? == null {
+        $info | merge { commands: [ $name ] }
+    } | default $info
     return $info
 }
 
@@ -386,17 +389,15 @@ def install-file [
 
 
 def install [
-    pkg: record,
-    src_dir: string,
-    dst_dir: string,
-    verion: string,
-    --vars: record,
-    --force
+    pkg: record
+    src_dir: string
+    dst_dir: string
+    verion: string
+    force: bool
+    --vars: record
 ] {
     let vars = $vars | default (varables)
     log debug $"Installing ($pkg.name) from ($src_dir) to ($dst_dir)"
-
-    let src_dir = $src_dir | enter_single_non_fhs_dir
     
     log debug $"Installing ($pkg.name) from ($src_dir) to ($dst_dir)"
 
@@ -792,7 +793,22 @@ def extract-tarball [
     }
 
 
+    let extract_dir = $extract_dir | enter_single_non_fhs_dir
+
+    do {
+        cd $extract_dir
+        let entries = ls
+        if ($entries | length) == 1 {
+            let entry = $entries | first
+            if $entry.type == "file" and $entry.name != $bin_name {
+                mv $entry.name $bin_name
+            }
+        }
+    }
+
     print $"Extracted: ($file_name) to ($extract_dir)"
+
+    $extract_dir
 }
 
 def install-package [
@@ -924,14 +940,9 @@ def install-package [
 
         download $file_path $browser_download_url --file-digest $file_digest
 
-        extract-tarball $file_path $dist_dir $bin_name ($asset.content_type?)
+        let dist_dir = extract-tarball $file_path $dist_dir $bin_name ($asset.content_type?)
 
-
-        if $force {
-            install $pkg $dist_dir $prefix $version --vars $vars --force 
-        } else {
-            install $pkg $dist_dir $prefix $version --vars $vars
-        }
+        install $pkg $dist_dir $prefix $version $force --vars $vars
 
         log info $"Installation of ($pkg.name) completed successfully."
     } catch { |err|
