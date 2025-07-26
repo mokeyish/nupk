@@ -1,11 +1,12 @@
 #!/usr/bin/env nu
 use std/log
 
+const THIS_DIR = path self .
+
 def varables [ 
     --prefix: string
 ] {
     const NAME = "nupk"
-    const SCRIPT_DIR = path self .
     const OHMYNU = $nu.home-path | path join .ohmynu
     const PREFIX = $nu.home-path | path join .local
     const BIN_DIR = $PREFIX | path join bin
@@ -34,7 +35,7 @@ def varables [
         data_dir: $data_dir
         installed_dir: $installed_dir
         download_dir: $download_dir
-        registry_dir: ($SCRIPT_DIR | path join registry)
+        registry_dir: ($THIS_DIR | path join registry)
         gh_proxy: $gh_proxy
         gh_api: $gh_api
     }
@@ -1030,6 +1031,12 @@ alias "main remove" = main uninstall
 def "main update" [
     --name: string
  ] {
+}
+def "main self update" [ ] {
+    do {
+        cd $THIS_DIR
+        git pull --rebase --autostash
+    }
 }
 
 def "main env" [
