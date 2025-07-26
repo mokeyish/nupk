@@ -1,0 +1,16 @@
+#!/bin/env bash
+
+# get dir from args
+INSATLL_DIR="$1"
+
+echo "Cloning nupk to $INSATLL_DIR..."
+
+git clone --depth 1 --no-checkout https://github.com/mokeyish/nupk.git $INSATLL_DIR
+
+cd $INSATLL_DIR
+
+git config core.sparseCheckout true
+
+git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh'
+
+git checkout

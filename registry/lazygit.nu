@@ -1,0 +1,5 @@
+
+{
+    owner: jesseduffield,
+    name: lazygit,
+} 

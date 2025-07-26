@@ -1,0 +1,4 @@
+{
+    owner: nushell,
+    name: nushell,
+} 

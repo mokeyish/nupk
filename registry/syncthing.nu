@@ -1,0 +1,5 @@
+
+{
+    owner: syncthing,
+    name: syncthing,
+} 

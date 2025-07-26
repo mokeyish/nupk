@@ -1,0 +1,5 @@
+
+{
+    owner: jqlang,
+    name: jq,
+} 
