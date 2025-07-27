@@ -1,0 +1,5 @@
+
+{
+    owner: juanfont
+    name: headscale
+} 
