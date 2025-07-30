@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mokeyish/nupk/blob/main/LICENSE)
 [![NuShell](https://img.shields.io/badge/Powered%20by-NuShell-green.svg)](https://www.nushell.sh)
 
+English | [中文](https://github.com/mokeyish/nupk/blob/main/README_zh-CN.md)
+
 > Simplifying package installation, updates, and uninstallation from GitHub Releases
 
 Solves software management pain points in multi-system environments:
@@ -14,7 +16,7 @@ Solves software management pain points in multi-system environments:
 ## Installation Requirements
 
 - [Nushell](https://www.nushell.sh) installed (v0.106.0+)
-- Basic tools: `curl` and `unzip`
+- Basic tools: `curl`, `file`, `tar` and `unzip` etc.
 
 ## Quick Installation
 
