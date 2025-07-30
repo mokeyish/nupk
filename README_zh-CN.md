@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mokeyish/nupk/blob/main/LICENSE)
 [![NuShell](https://img.shields.io/badge/Powered%20by-NuShell-green.svg)](https://www.nushell.sh)
 
+[English](https://github.com/mokeyish/nupk/blob/main/README.md) | 中文
+
 > 简化 GitHub Releases 的软件包安装、更新和卸载流程
 
 解决多系统环境下的软件管理痛点：
@@ -14,7 +16,7 @@
 ## 安装要求
 
 - 已安装 [Nushell](https://www.nushell.sh) (v0.106.0+)
-- `curl` 和 `unzip` 基础工具
+- `curl`、`file`、`tar` 和 `unzip` 等基础工具
 
 ## 快速安装
 
