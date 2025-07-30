@@ -15,7 +15,7 @@ cd $INSATLL_DIR
 
 git config core.sparseCheckout true
 
-git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh'
+git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh' '!/test.nu'
 
 
 git checkout

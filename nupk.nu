@@ -64,26 +64,6 @@ def try-filter [
     }
 }
 
-def do-if [
-    condition,
-    then,
-] {
-    let input = $in
-    let eval = {
-        let it = $in
-        if ($it | describe) == "closure" {
-            do $it $input
-        } else {
-            $it
-        }
-    }
-    let condition = $condition | do $eval
-    if $condition {
-        $then | do $eval
-    } else {
-        $input
-    }
-}
 
 # Check if a directory is empty or contains only other empty directories.
 def is-empty-dir [ ] {
@@ -97,6 +77,25 @@ def is-empty-dir [ ] {
         $entites | each { |it| $it.name } | all { |it| $it | is-empty-dir }
     }
 }
+
+def "path map-to" [
+    mappings: list<record<src: string, dst: string>>
+] {
+    let file_path = $in
+    let mapping = $mappings | where { |it| $file_path | str starts-with $it.src } | first
+    if $mapping == null {
+        $file_path
+    }
+    let src = $mapping.src
+    let dst = $mapping.dst
+    let file_path = if $file_path == $src {
+        $file_path | path basename
+    } else {
+        $file_path | path relative-to $src
+    }
+    $dst | path join $file_path
+}
+
 
 const STD_FHS_DIRS = [bin, sbin, lib, libexec, etc, share ]
 
@@ -458,10 +457,11 @@ def install [
             let src_path = $src_dir | path join $file_path
             let dst_path = do {
                 cd $dst_dir
-                $install_path_mappings | where { |it| $file_path | str starts-with $it.src } | first | get dst | path join $file_path | path expand
+                $file_path | path map-to $install_path_mappings | path expand
             }
 
             if ($src_path | path type) != "dir" {
+                log debug $"Installing file: ($src_path) -> ($dst_path)"
                 install-file $file_path $src_path $dst_path --overwrite $overwrite
             }
             $dst_path
@@ -1059,13 +1059,4 @@ def --wrapped "main run" [ cmd: string, ...args ] {
     } {
         ^($cmd) ...$args
     }
-}
-
-def "main test" [
-    ...pkg: string
-] {
-    let x = if 2 == 1 + 2 {
-        "100"
-    }
-    print ($x == null)
 }
