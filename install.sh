@@ -7,15 +7,24 @@ INSATLL_DIR="$1"
 
 INSATLL_DIR=${INSATLL_DIR:=$HOME/.nupk}
 
+ver-gte()
+{
+    printf '%s\n%s\n' "$2" "$1" | sort --check=quiet --version-sort
+}
+
 echo "Cloning nupk to $INSATLL_DIR..."
 
 git clone --depth 1 --no-checkout https://github.com/mokeyish/nupk.git $INSATLL_DIR
 
 cd $INSATLL_DIR
 
-git config core.sparseCheckout true
+if ver-gte $(git --version) 2.25.0;then
+    git config core.sparseCheckout true
 
-git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh' '!/test.nu'
+    git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh'
+else
+    echo "Warning: Sparse checkout is not supported in your git version, please upgrade git to 2.25.0 or later."
+fi
 
 
 git checkout
