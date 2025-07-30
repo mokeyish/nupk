@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/env sh
 
 set -e
 
@@ -7,7 +7,7 @@ INSATLL_DIR="$1"
 
 INSATLL_DIR=${INSATLL_DIR:=$HOME/.nupk}
 
-ver-gte()
+ver_gte()
 {
     printf '%s\n%s\n' "$2" "$1" | sort --check=quiet --version-sort
 }
@@ -18,7 +18,7 @@ git clone --depth 1 --no-checkout https://github.com/mokeyish/nupk.git $INSATLL_
 
 cd $INSATLL_DIR
 
-if ver-gte $(git --version) 2.25.0;then
+if ver_gte $(git --version) 2.25.0;then
     git config core.sparseCheckout true
 
     git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh'
