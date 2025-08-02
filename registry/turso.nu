@@ -1,0 +1,5 @@
+
+{
+    owner: tursodatabase
+    name: turso
+} 
