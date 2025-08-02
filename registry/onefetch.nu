@@ -1,5 +1,5 @@
 
 {
-    owner: o2sh,
-    name: onefetch,
-} 
+    owner: o2sh
+    name: onefetch
+}

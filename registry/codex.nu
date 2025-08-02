@@ -1,8 +1,8 @@
 
 {
-    owner: openai,
-    name: codex,
+    owner: openai
+    name: codex
     # commands: [
     #     codex
     # ]
-} 
+}

@@ -1,5 +1,5 @@
 
 {
-    owner: caddyserver,
-    name: caddy,
-} 
+    owner: caddyserver
+    name: caddy
+}

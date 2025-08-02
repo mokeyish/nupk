@@ -1,5 +1,5 @@
 
 {
-    owner: orhun,
-    name: kmon,
-} 
+    owner: orhun
+    name: kmon
+}

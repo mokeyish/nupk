@@ -1,5 +1,5 @@
 
 {
-    owner: JanDeDobbeleer,
-    name: oh-my-posh,
-} 
+    owner: JanDeDobbeleer
+    name: oh-my-posh
+}

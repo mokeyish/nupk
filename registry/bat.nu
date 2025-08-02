@@ -1,5 +1,5 @@
 
 {
-    owner: sharkdp,
-    name: bat,
+    owner: sharkdp
+    name: bat
 } 

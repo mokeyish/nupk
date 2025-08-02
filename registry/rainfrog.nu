@@ -1,5 +1,5 @@
 
 {
-    owner: achristmascarl,
-    name: rainfrog,
-} 
+    owner: achristmascarl
+    name: rainfrog
+}

@@ -1,4 +1,4 @@
 {
-    owner: nushell,
-    name: nushell,
-} 
+    owner: nushell
+    name: nushell
+}

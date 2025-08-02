@@ -1,5 +1,5 @@
 
 {
-    owner: mokeyish,
-    name: zerotier-edge,
-} 
+    owner: mokeyish
+    name: zerotier-edge
+}

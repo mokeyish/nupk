@@ -1,5 +1,5 @@
 
 {
-    owner: ajeetdsouza,
-    name: zoxide,
-} 
+    owner: ajeetdsouza
+    name: zoxide
+}

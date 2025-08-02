@@ -1,5 +1,5 @@
 
 {
-    owner: BurntSushi,
-    name: ripgrep,
+    owner: BurntSushi
+    name: ripgrep
 } 

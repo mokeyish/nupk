@@ -1,5 +1,5 @@
 
 {
-    owner: cli,
-    name: cli,
-} 
+    owner: cli
+    name: cli
+}

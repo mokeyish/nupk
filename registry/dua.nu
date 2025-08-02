@@ -1,5 +1,5 @@
 
 {
-    owner: Byron,
-    name: dua-cli,
+    owner: Byron
+    name: dua-cli
 } 

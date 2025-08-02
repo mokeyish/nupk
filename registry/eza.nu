@@ -1,5 +1,5 @@
 
 {
-    owner: eza-community,
-    name: eza,
-} 
+    owner: eza-community
+    name: eza
+}

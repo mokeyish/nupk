@@ -1,5 +1,5 @@
 
 {
-    owner: rclone,
-    name: rclone,
-} 
+    owner: rclone
+    name: rclone
+}

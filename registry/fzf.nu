@@ -1,5 +1,5 @@
 
 {
-    owner: junegunn,
-    name: fzf,
-} 
+    owner: junegunn
+    name: fzf
+}

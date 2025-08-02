@@ -1,5 +1,5 @@
 
 {
-    owner: svenstaro,
-    name: miniserve,
-} 
+    owner: svenstaro
+    name: miniserve
+}

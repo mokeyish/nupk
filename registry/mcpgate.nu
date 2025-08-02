@@ -1,5 +1,5 @@
 
 {
-    owner: mokeyish,
-    name: mcpgate,
-} 
+    owner: mokeyish
+    name: mcpgate
+}

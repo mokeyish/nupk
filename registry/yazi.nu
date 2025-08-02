@@ -1,5 +1,5 @@
 
 {
-    owner: sxyazi,
-    name: yazi,
-} 
+    owner: sxyazi
+    name: yazi
+}

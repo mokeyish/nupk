@@ -1,5 +1,5 @@
 
 {
-    owner: zellij-org,
-    name: zellij,
-} 
+    owner: zellij-org
+    name: zellij
+}
