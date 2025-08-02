@@ -1,5 +1,5 @@
 
 {
-    owner: syncthing,
-    name: syncthing,
-} 
+    owner: syncthing
+    name: syncthing
+}

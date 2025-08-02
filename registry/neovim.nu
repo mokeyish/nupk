@@ -1,7 +1,7 @@
 {
-    owner: neovim,
-    name: neovim,
+    owner: neovim
+    name: neovim
     commands: [
         nvim
-    ],
-} 
+    ]
+}

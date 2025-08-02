@@ -1,5 +1,5 @@
 
 {
-    owner: zed-industries,
-    name: zed,
-} 
+    owner: zed-industries
+    name: zed
+}

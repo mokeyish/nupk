@@ -1,5 +1,5 @@
 
 {
-    owner: fatedier,
-    name: frp,
-} 
+    owner: fatedier
+    name: frp
+}

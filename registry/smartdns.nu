@@ -1,5 +1,5 @@
 
 {
-    owner: mokeyish,
-    name: smartdns-rs,
-} 
+    owner: mokeyish
+    name: smartdns-rs
+}

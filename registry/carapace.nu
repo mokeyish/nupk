@@ -1,5 +1,5 @@
 
 {
-    owner: carapace-sh,
-    name: carapace-bin,
+    owner: carapace-sh
+    name: carapace-bin
 } 

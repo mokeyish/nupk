@@ -1,5 +1,5 @@
 
 {
-    owner: jesseduffield,
-    name: lazygit,
-} 
+    owner: jesseduffield
+    name: lazygit
+}

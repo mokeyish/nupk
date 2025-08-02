@@ -1,5 +1,5 @@
 
 {
-    owner: timvisee,
-    name: ffsend,
-} 
+    owner: timvisee
+    name: ffsend
+}

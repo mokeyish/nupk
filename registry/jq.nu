@@ -1,5 +1,5 @@
 
 {
-    owner: jqlang,
-    name: jq,
-} 
+    owner: jqlang
+    name: jq
+}

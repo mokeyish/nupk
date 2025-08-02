@@ -1,8 +1,8 @@
 {
-    owner: astral-sh,
-    name: uv,
+    owner: astral-sh
+    name: uv
     commands: [
         uv,
         uvx
     ]
-} 
+}

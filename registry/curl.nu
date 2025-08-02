@@ -1,5 +1,5 @@
 
 {
-    owner: stunnel,
-    name: static-curl,
+    owner: stunnel
+    name: static-curl
 } 

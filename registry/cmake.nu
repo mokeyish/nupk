@@ -1,5 +1,5 @@
 
 {
-    owner: Kitware,
-    name: cmake,
-} 
+    owner: Kitware
+    name: cmake
+}

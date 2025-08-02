@@ -1,5 +1,5 @@
 
 {
-    owner: casey,
-    name: just,
-} 
+    owner: casey
+    name: just
+}

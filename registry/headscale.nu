@@ -2,4 +2,4 @@
 {
     owner: juanfont
     name: headscale
-} 
+}

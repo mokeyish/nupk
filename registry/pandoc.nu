@@ -1,5 +1,5 @@
 
 {
-    owner: jgm,
-    name: pandoc,
-} 
+    owner: jgm
+    name: pandoc
+}

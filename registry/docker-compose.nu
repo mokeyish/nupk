@@ -1,8 +1,8 @@
 
 {
-    owner: docker,
-    name: compose,
+    owner: docker
+    name: compose
     commands: [
         "docker-compose"
     ]
-} 
+}

@@ -1,5 +1,5 @@
 
 {
-    owner: yorukot,
-    name: superfile,
-} 
+    owner: yorukot
+    name: superfile
+}
