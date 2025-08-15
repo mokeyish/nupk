@@ -210,6 +210,10 @@ def match-arch [] {
     if $arch == "x86_64" and (($text | str contains "amd64") or ($text | str contains "x64") ) {
         return true
     }
+
+    if $arch == "aarch64" and ($text | str contains "arm64") {
+        return true
+    }
     return false
 }
 
