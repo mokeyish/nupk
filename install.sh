@@ -6,6 +6,7 @@ set -e
 INSATLL_DIR="$1"
 
 INSATLL_DIR=${INSATLL_DIR:=$HOME/.nupk}
+PREFIX=${PREFIX:=$HOME/.local}
 
 ver_gte()
 {
@@ -31,8 +32,9 @@ git checkout
 
 chmod +x nupk.nu
 
-echo "Installing nupk to $HOME/.local/bin..."
-ln -sf $INSATLL_DIR/nupk.nu $HOME/.local/bin/nupk
+echo "Installing nupk to $PREFIX/.local/bin..."
+mkdir -p $PREFIX/bin
+ln -sf $INSATLL_DIR/nupk.nu $PREFIX/bin/nupk
 
 
 nupk info
