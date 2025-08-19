@@ -1,8 +1,15 @@
-source ../nupk.nu
 use std/assert
+use ../test.nu *
+source ../nupk.nu
 
 
 def "main test" [] {
+    do test all $env.CURRENT_FILE [
+        test_path_map
+    ]
+}
+
+def test_path_map [] {
     let a = "bin/btop"
     let m = [
         {

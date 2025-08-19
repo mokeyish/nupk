@@ -171,20 +171,34 @@ def detect-target [] {
 }
 
 def match-target [
-    name: closure,
+    --name: closure,
+    --pkg: record<platform: record>,
+    --target: record<os: string, arch: string>,
 ] {
+    let items = $in | each {|it| { name: (
+        if $name != null {
+            do $name $it | str downcase
+        } else {
+            $it | str downcase
+        }
+    ), item: $it } }
 
-    let items = $in | each {|it| { name: (do $name $it | str downcase), item: $it } }
+    let os_alias = {
+        macos: [ darwin, osx ]
+    }
 
-    let target = detect-target
+    let target = $target | default (detect-target)
     let target_os = $target.os
     let target_arch = $target.arch
 
+    let items = $items | where { |it| not ($it.name | match-arch -a $target_arch -r ) }
 
     let items = $items | where { |it| not ($it.name | str contains "sha256") }
 
     let items = $items | try-filter { |it| ($it.name | str contains $target_os) }
-    let items = $items | try-filter { |it| ($it.name | match-arch ) }
+
+    let items = $items | try-filter { |it| $it.name | match-arch -a $target_arch }
+
     let items = $items | try-filter { |it| ($it.name | str contains "musl") }
     let items = $items | try-filter { |it| ($it.name | str ends-with ".tar.gz") }
     let items = $items | try-filter { |it| ($it.name | str ends-with ".tgz") }
@@ -196,25 +210,47 @@ def match-target [
     return $items
 }
 
-def match-arch [] {
+def match-arch [
+    --arch(-a): string
+    --reverse(-r)
+] {
+    let arch_alias = {
+        aarch64: [ arm64 ]
+        x86_64: [ amd64, x64 ]
+        ppc64le: []
+    }
+    let default = $reverse
+
     let text = $in
-    let arch =  $nu.os-info.arch
+    let arch = $arch | default $nu.os-info.arch
+
     if ($text | str contains $arch) {
-        return true
+        return (not $default)
     }
 
     if ($text | str contains ($arch | str kebab-case)) {
-        return true
+        return (not $default)
     }
 
-    if $arch == "x86_64" and (($text | str contains "amd64") or ($text | str contains "x64") ) {
-        return true
+    let alias = $arch_alias | get $arch
+
+    if $alias != null {
+        for a in $alias {
+            if ($text | str contains $a) {
+                return (not $default)
+            }
+        }
+    }
+    if $reverse {
+        let archs = $arch_alias | columns | where $it != $arch | each { |it| $arch_alias | get $it | append $it } | flatten
+        for a in $archs {
+            if ($text | str contains $a) {
+                return true
+            }
+        }
     }
 
-    if $arch == "aarch64" and ($text | str contains "arm64") {
-        return true
-    }
-    return false
+    return ($default and not $reverse)
 }
 
 # check if a given file path points to an executable file or not. This function
@@ -884,7 +920,7 @@ def install-package [
         }
     }
 
-    let assets = $release | get assets | match-target { |it| $it.name }
+    let assets = $release | get assets | match-target --name { |it| $it.name } --pkg $pkg
     if ($assets | length) == 0 {
         print $"No asset found for target: ($target)"
         return
