@@ -3,6 +3,24 @@ use std/log
 
 const TEST_DIR = path self . | path join tests
 
+export def "do test" [ work: closure, name: string ] {
+    try {
+        do $work
+        log info  $"Test passed ✅: ($name)"
+    } catch {
+        log error $"Test failed ❌: ($name)"
+    }
+}
+
+
+export def "do test all" [ file: string, unit_tests: list<string> ] {
+    for unit_test in $unit_tests {
+        do test {
+            nu --commands $"source ($file); ($unit_test)"
+        } $"($file)::($unit_test)"
+    }
+}
+
 
 def main [
     --name(-n): string
@@ -15,9 +33,8 @@ def main [
     for file_path in $file_paths {
         try {
             ^($nu.current-exe) -n $file_path test
-            log info $"Test passed ✅: ($file_path)"
         } catch {
-            log error $"Test failed ❌: ($file_path)"
+            log error $"Test failed ❌: ($name)"
         }
     }
 }
