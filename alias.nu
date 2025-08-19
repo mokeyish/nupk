@@ -5,5 +5,6 @@ export const alias = {
     hx: helix
     spf: superfile
     btm: bottom
+    mamba: micromamba
     rg: ripgrep
 }
