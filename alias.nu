@@ -7,4 +7,5 @@ export const alias = {
     btm: bottom
     mamba: micromamba
     rg: ripgrep
+    fish: fish-shell
 }
