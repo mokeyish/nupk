@@ -32,7 +32,7 @@ git checkout
 
 chmod +x nupk.nu
 
-echo "Installing nupk to $PREFIX/.local/bin..."
+echo "Installing nupk to $PREFIX/bin..."
 mkdir -p $PREFIX/bin
 ln -sf $INSATLL_DIR/nupk.nu $PREFIX/bin/nupk
 
