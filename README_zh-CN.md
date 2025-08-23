@@ -22,6 +22,9 @@
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
+
+# 或者，通过代理
+curl -LsSf https://ghfast.top/https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
 ```
 
 > **提示**：安装后可通过 `nupk` 管理 Nushell 自身的版本更新
