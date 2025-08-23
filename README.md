@@ -22,6 +22,9 @@ Solves software management pain points in multi-system environments:
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
+
+# Or, via proxy
+https://ghfast.top/https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
 ```
 
 > **Tip**: After installation, manage Nushell's own version updates via `nupk`
