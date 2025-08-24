@@ -1,62 +1,67 @@
-#!/bin/env sh
-
+#!/usr/bin/env sh
 set -e
 
 # curl -LsSf https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh -s -- <install dir>
-INSATLL_DIR="$1"
-
-INSATLL_DIR=${INSATLL_DIR:=$HOME/.nupk}
-PREFIX=${PREFIX:=$HOME/.local}
+INSTALL_DIR="$1"
+[ -n "$INSTALL_DIR" ] || INSTALL_DIR="$HOME/.nupk"
+[ -n "$PREFIX" ] || PREFIX="$HOME/.local"
 
 ver_gte() {
-    ver_arr() {
-        IFS='.' read -r -a ver <<< "$1"
-        echo "${ver[@]}"
-    }
+    v1=$1
+    v2=$2
+    # 把版本号按点切分，补齐到 3 段
+    set -- $(echo "$v1" | awk -F. '{printf "%d %d %d", $1,$2,$3}')
+    a1=$1; a2=$2; a3=$3
+    set -- $(echo "$v2" | awk -F. '{printf "%d %d %d", $1,$2,$3}')
+    b1=$1; b2=$2; b3=$3
 
-    local curr=($(ver_arr "$1"))
-    local req=($(ver_arr "$2"))
+    if [ "$a1" -gt "$b1" ]; then return 0; fi
+    if [ "$a1" -lt "$b1" ]; then return 1; fi
 
-    for i in 0 1 2; do
-        curr_val=${curr[i]:-0}
-        req_val=${req[i]:-0}
+    if [ "$a2" -gt "$b2" ]; then return 0; fi
+    if [ "$a2" -lt "$b2" ]; then return 1; fi
 
-        if (( curr_val > req_val )); then
-            return 0
-        elif (( curr_val < req_val )); then
-            return 1
-        fi
-    done
+    if [ "$a3" -ge "$b3" ]; then return 0; fi
 
-    # 版本号相等
     return 1
 }
 
-echo "Cloning nupk to $INSATLL_DIR..."
+echo "Cloning nupk to $INSTALL_DIR..."
+git clone --depth 1 --no-checkout https://github.com/mokeyish/nupk.git "$INSTALL_DIR"
 
-git clone --depth 1 --no-checkout https://github.com/mokeyish/nupk.git $INSATLL_DIR
+cd "$INSTALL_DIR"
 
-cd $INSATLL_DIR
-
-currrent_git_version=$(git --version | awk '{print $3}')
+current_git_version=$(git --version | awk '{print $3}')
 required_git_version="2.25.0"
-if ver_gte "$currrent_git_version" "$required_git_version";then
-    git config core.sparseCheckout true
-    git sparse-checkout set --no-cone  '/*' '!/**/tests/' '!/install.sh'
-else
-    echo "Warning: Sparse checkout is not supported in your git version, please upgrade git to $required_git_version or later."
-fi
 
+if ver_gte "$current_git_version" "$required_git_version"; then
+    git config core.sparseCheckout true
+    git sparse-checkout set --no-cone '/*' '!/**/tests/' '!/install.sh'
+else
+    echo "Warning: Sparse checkout is not supported in your git version."
+    echo "Please upgrade git to $required_git_version or later."
+fi
 
 git checkout
 
 chmod +x nupk.nu
 
 echo "Installing nupk to $PREFIX/bin..."
-mkdir -p $PREFIX/bin
-ln -sf $INSATLL_DIR/nupk.nu $PREFIX/bin/nupk
+mkdir -p "$PREFIX/bin"
+ln -sf "$INSTALL_DIR/nupk.nu" "$PREFIX/bin/nupk"
 
-
-nupk info
+"$PREFIX/bin/nupk" info || true
 
 echo "Installation complete. You can now use 'nupk' command."
+
+
+# 检查 PATH 里是否有 $PREFIX/bin
+case ":$PATH:" in
+  *":$PREFIX/bin:"*) ;;
+  *)
+    echo ""
+    echo "⚠️  Warning: $PREFIX/bin is not in your PATH."
+    echo "   Please add the following line to your shell rc file (e.g. ~/.bashrc or ~/.zshrc):"
+    echo "     export PATH=\"$PREFIX/bin:\$PATH\""
+    ;;
+esac
