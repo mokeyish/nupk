@@ -22,8 +22,9 @@ Solves software management pain points in multi-system environments:
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
-
-# Or, via proxy
+```
+Or, via proxy
+```
 curl -LsSf https://ghfast.top/https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
 ```
 
