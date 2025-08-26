@@ -22,8 +22,9 @@
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
-
-# 或者，通过代理
+```
+或者，通过代理
+```
 curl -LsSf https://ghfast.top/https://raw.githubusercontent.com/mokeyish/nupk/main/install.sh | sh
 ```
 
