@@ -12,6 +12,7 @@ def "main test" [] {
         test_match_arch_reverse_2
         test_match_arch_reverse_3
         test_match_target_1
+        test_match_os_1
     ]
 }
 
@@ -82,4 +83,14 @@ def test_match_target_1 [] {
     let ret = $items | match-target
     assert (($ret | length) == 1)
     assert (($ret | get 0) == '64')
+}
+
+def test_match_os_1 [] {
+    let items = [
+        '64'
+        darwin
+    ]
+    let ret = $items | where { |it| $it | match-os -o macos }
+    assert (($ret | length) == 1)
+    assert (($ret | get 0) == 'darwin')
 }
