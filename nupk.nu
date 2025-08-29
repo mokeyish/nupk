@@ -191,13 +191,13 @@ def match-target [
     let target_os = $target.os
     let target_arch = $target.arch
 
-    let items = $items | where { |it| not ($it.name | match-arch -a $target_arch -r ) }
-
     let items = $items | where { |it| not ($it.name | str contains "sha256") }
 
-    let items = $items | try-filter { |it| ($it.name | str contains $target_os) }
+    let items = $items | where { |it| not ($it.name | match-arch -a $target_arch -r ) }
+    let items = $items | where { |it| not ($it.name | match-os -o $target_os -r ) }
 
     let items = $items | try-filter { |it| $it.name | match-arch -a $target_arch }
+    let items = $items | try-filter { |it| $it.name | match-os -o $target_os }
 
     let items = $items | try-filter { |it| ($it.name | str contains "musl") }
     let items = $items | try-filter { |it| ($it.name | str ends-with ".tar.gz") }
@@ -210,6 +210,60 @@ def match-target [
     return $items
 }
 
+def match-name [
+    --alias(-a): record
+    --reverse(-r)
+    name: string
+] {
+    let name_alias = $alias | default ({})
+    let default = $reverse
+
+    let text = $in
+
+    if ($text | str contains $name) {
+        return (not $default)
+    }
+
+    if ($text | str contains ($name | str kebab-case)) {
+        return (not $default)
+    }
+
+    if $name in $name_alias {
+        let alias = $name_alias | get $name
+        for a in $alias {
+            if ($text | str contains $a) {
+                return (not $default)
+            }
+        }
+    }
+    if $reverse {
+        let alias = $name_alias | columns | where $it != $name | each { |it| $name_alias | get $it | append $it } | flatten
+        for a in $alias {
+            if ($text | str contains $a) {
+                return true
+            }
+        }
+    }
+
+    return ($default and not $reverse)
+}
+
+def match-os [
+    --os(-o): string
+    --reverse(-r)
+] {
+    let os_alias = {
+        macos: [ darwin, osx ]
+    }
+    let text = $in
+    let os = $os | default $nu.os-info.name
+    if $reverse {
+        $text | match-name -a $os_alias -r $os
+    } else {
+        $text | match-name -a $os_alias $os
+    }
+}
+
 def match-arch [
     --arch(-a): string
     --reverse(-r)
@@ -219,38 +273,13 @@ def match-arch [
         x86_64: [ amd64, x64 ]
         ppc64le: []
     }
-    let default = $reverse
-
     let text = $in
     let arch = $arch | default $nu.os-info.arch
-
-    if ($text | str contains $arch) {
-        return (not $default)
-    }
-
-    if ($text | str contains ($arch | str kebab-case)) {
-        return (not $default)
-    }
-
-    let alias = $arch_alias | get $arch
-
-    if $alias != null {
-        for a in $alias {
-            if ($text | str contains $a) {
-                return (not $default)
-            }
-        }
-    }
     if $reverse {
-        let archs = $arch_alias | columns | where $it != $arch | each { |it| $arch_alias | get $it | append $it } | flatten
-        for a in $archs {
-            if ($text | str contains $a) {
-                return true
-            }
-        }
+        $text | match-name -a $arch_alias -r $arch
+    } else {
+        $text | match-name -a $arch_alias $arch
     }
-
-    return ($default and not $reverse)
 }
 
 # check if a given file path points to an executable file or not. This function
